@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:http/http.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -29,7 +30,7 @@ class _DashboardState extends State<Dashboard> {
 
   Future<bool> isDataAvailable(int year, int month) async {
     var res = await get(Uri.parse(
-        'https://solatapi.iqfareez.com/api/v2/solat/ngs02?year=$year&month=$month'));
+        'https://mpt-server.vercel.app/api/v2/solat/ngs02?year=$year&month=$month'));
     return res.statusCode == 200;
   }
 
@@ -126,7 +127,19 @@ class _DashboardState extends State<Dashboard> {
             },
           ),
           const SizedBox(height: 10),
-          const Text('All data is check based on NGS02 zone')
+          const MarkdownBody(data: 'All data is checked:'),
+          const MarkdownBody(data: '- based on `NGS02` zone'),
+          MarkdownBody(
+            data:
+                '- againts [v2 solat API](https://github.com/mptwaktusolat/mpt-server/issues/3). Hence, data prior May 2023 is expected to be not available',
+            onTapLink: (text, href, title) => launchUrl(Uri.parse(href!)),
+          ),
+          const SizedBox(height: 10),
+          MarkdownBody(
+            data:
+                'Prayer time database is [updated periodically](https://github.com/mptwaktusolat/waktusolat-fetcher). Fetched from [e-solat](https://www.e-solat.gov.my/) JAKIM portal.',
+            onTapLink: (text, href, title) => launchUrl(Uri.parse(href!)),
+          ),
         ],
       ),
     );
