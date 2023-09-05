@@ -1,22 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:http/http.dart';
+import 'package:mpt_data_health/month_table.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-final monthMap = {
-  1: 'January',
-  2: 'February',
-  3: 'March',
-  4: 'April',
-  5: 'May',
-  6: 'June',
-  7: 'July',
-  8: 'August',
-  9: 'September',
-  10: 'October',
-  11: 'November',
-  12: 'December'
-};
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -27,25 +12,6 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int currentYear = DateTime.now().year;
-
-  Future<bool> isDataAvailable(int year, int month) async {
-    var res = await get(Uri.parse(
-        'https://mpt-server.vercel.app/api/v2/solat/ngs02?year=$year&month=$month'));
-    return res.statusCode == 200;
-  }
-
-  int getAxisCount() {
-    final screenWidth = MediaQuery.sizeOf(context).width;
-    if (screenWidth <= 280) {
-      return 1;
-    } else if (screenWidth < 420) {
-      return 2;
-    } else if (screenWidth < 821) {
-      return 3;
-    } else {
-      return 6;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,48 +50,7 @@ class _DashboardState extends State<Dashboard> {
             ],
           ),
           const SizedBox(height: 10),
-          GridView.builder(
-            itemCount: 12,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: getAxisCount(), childAspectRatio: 3 / 2),
-            itemBuilder: (context, index) {
-              var month = index + 1;
-              var monthName = monthMap[month];
-              return Card(
-                child: FutureBuilder(
-                    future: isDataAvailable(currentYear, month),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      if (snapshot.hasError) {
-                        return Text(
-                          'Error',
-                          style: Theme.of(context).textTheme.headline5,
-                        );
-                      }
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            snapshot.data! ? Icons.check : Icons.close,
-                            color: snapshot.data! ? Colors.green : Colors.red,
-                            size: 56,
-                          ),
-                          Text(
-                            monthName!,
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                        ],
-                      );
-                    }),
-              );
-            },
-          ),
+          MonthTable(key: ValueKey(currentYear), year: currentYear),
           const SizedBox(height: 10),
           const MarkdownBody(data: 'All data is checked:'),
           const MarkdownBody(data: '- based on `NGS02` zone'),
