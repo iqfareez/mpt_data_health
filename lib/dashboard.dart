@@ -21,9 +21,9 @@ class _DashboardState extends State<Dashboard> {
         actions: [
           TextButton(
               onPressed: () {
-                launchUrl(Uri.parse('https://mpt-server.vercel.app'));
+                launchUrl(Uri.parse('https://api.waktusolat.app'));
               },
-              child: const Text('MPT-Server')),
+              child: const Text('Back to Waktu Solat API')),
         ],
       ),
       body: ListView(
