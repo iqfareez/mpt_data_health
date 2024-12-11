@@ -1,5 +1,5 @@
 > [!NOTE]  
-> Project is archieved. We have new Health page [here](https://api.waktusolat.app/health).
+> Project is archived. We have new Health page [here](https://api.waktusolat.app/health).
 
 ____
 
