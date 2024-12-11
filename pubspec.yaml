@@ -1,5 +1,5 @@
 name: mpt_data_health
-description: A new Flutter project.
+description: Prayer Time API Data Health Dashboard
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^1.1.0
   url_launcher: ^6.1.13
-  flutter_markdown: ^0.6.17+2
+  flutter_markdown: ^0.7.4+3
 
 dev_dependencies:
   flutter_test:
@@ -47,7 +47,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^5.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
